@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<head>
+
+  <title>Keep that Screen On!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+
+  <div>Press button to Toggle Keep Screen On</div>
+  <input type="button" id="toggleKeepScreenOn" value="Turn Keep Screen ON">
+  <video width="1" height="1" loop id="screenOnVideo">
+    <source src="blank_video16x9.mp4" type="video/mp4">
+  </video>
+
+
+</body>
+
+<!-- Javascript Files -->
+<script>
+
+var videoIsPlaying = false;
+var toggleButton = document.querySelector("#toggleKeepScreenOn");
+toggleButton.addEventListener("click", function () {
+  console.log ( videoIsPlaying)
+  if ( videoIsPlaying ) {
+    stopVideo();
+    videoIsPlaying = false;
+    toggleButton.value = "Turn Keep Screen ON";
+    document.body.style.backgroundColor = "white";
+  } else {
+    startVideo();
+    videoIsPlaying = true;
+    toggleButton.value = "Turn Keep Screen OFF";
+    document.body.style.backgroundColor = "lightblue";
+  }
+})
+
+
+var screenOnVideo = document.querySelector("#screenOnVideo");
+
+function startVideo () {
+  screenOnVideo.play();
+}
+
+function stopVideo () {
+  screenOnVideo.pause();
+}
+
+screenOnVideo.addEventListener("play", function () {
+  console.log ("Video is playing");
+})
+
+screenOnVideo.addEventListener("ended", function () {
+  console.log ("Video is ended");
+})
+
+screenOnVideo.addEventListener("pause", function () {
+  console.log ("Video is paused");
+})
+
+
+</script>
