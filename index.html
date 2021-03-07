@@ -11,10 +11,6 @@
 
   <div>Press button to Toggle Keep Screen On</div>
   <input type="button" id="toggleKeepScreenOn" value="Turn Keep Screen ON">
-  <video width="1" height="1" loop id="screenOnVideo">
-    <source src="blank_video16x9.mp4" type="video/mp4">
-  </video>
-
 
 </body>
 
@@ -26,40 +22,49 @@ var toggleButton = document.querySelector("#toggleKeepScreenOn");
 toggleButton.addEventListener("click", function () {
   console.log ( videoIsPlaying)
   if ( videoIsPlaying ) {
-    stopVideo();
+    keepScreenOn.stopVideo ();
     videoIsPlaying = false;
     toggleButton.value = "Turn Keep Screen ON";
     document.body.style.backgroundColor = "white";
   } else {
-    startVideo();
+    keepScreenOn.startVideo();
     videoIsPlaying = true;
     toggleButton.value = "Turn Keep Screen OFF";
     document.body.style.backgroundColor = "lightblue";
   }
 })
 
+var keepScreenOn = new KeepScreenOn ();
 
-var screenOnVideo = document.querySelector("#screenOnVideo");
+function KeepScreenOn () {
+  var keepScreenOnVideo = document.createElement("video");
+  keepScreenOnVideo.width = "1"
+  keepScreenOnVideo.height = "1"
+  keepScreenOnVideo.loop = true;
+  var blankVideo = document.createElement("source");
+  blankVideo.src = "blank_video16x9.mp4";
+  blankVideo.type = "video/mp4"
+  keepScreenOnVideo.appendChild(blankVideo);
+  document.body.appendChild ( keepScreenOnVideo );
 
-function startVideo () {
-  screenOnVideo.play();
+  keepScreenOnVideo.addEventListener("play", function () {
+    console.log ("Video is playing");
+  })
+
+  keepScreenOnVideo.addEventListener("ended", function () {
+    console.log ("Video is ended");
+  })
+
+  keepScreenOnVideo.addEventListener("pause", function () {
+    console.log ("Video is paused");
+  })
+
+  this.startVideo = function () {
+    keepScreenOnVideo.play();
+  }
+  this.stopVideo = function () {
+    keepScreenOnVideo.pause();
+  }
 }
-
-function stopVideo () {
-  screenOnVideo.pause();
-}
-
-screenOnVideo.addEventListener("play", function () {
-  console.log ("Video is playing");
-})
-
-screenOnVideo.addEventListener("ended", function () {
-  console.log ("Video is ended");
-})
-
-screenOnVideo.addEventListener("pause", function () {
-  console.log ("Video is paused");
-})
-
 
 </script>
